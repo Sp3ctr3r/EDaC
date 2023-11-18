@@ -7,14 +7,14 @@ import os
 
 
 def b64_encrypter():
-    getText = input("\nŞifrelenecek metni girin : ")
+    getText = input("\nEnter a text to encrypt : ")
 
     enc = base64.b64encode(getText.encode("utf-8"))
 
-    print("\nGirdi şifrelendi : ",enc, "\n")
+    print("\nInput Decrypted : ",enc, "\n")
 
 def b64_decrypter():
-    getText = input("\nÇözülecek metni girin : ")
+    getText = input("\nEnter a text to decrypt : ")
 
     edited = getText[2:-1]
 
@@ -22,40 +22,40 @@ def b64_decrypter():
     
     dec = decoded_bytes.decode("utf-8")
 
-    print("\nGirdi çözüldü : ", dec, "\n")
+    print("\nInput decrypted : ", dec, "\n")
 
 def sha_encode():
-    print("\n","****** Bu şifreleme ile encode edilen metinler tekrar decode edilemez! ******","\n")
-    text = input("Encode edilecek metin girin : ")
+    print("\n","****** Texts encoded with this encryption cannot be decoded again! ******","\n")
+    text = input("Enter e text to decrypt : ")
 
     sha256 = hashlib.sha256()
     sha256.update(text.encode())
 
-    sifrelenmis_metin = sha256.hexdigest()
+    decrypted_text = sha256.hexdigest()
 
-    print("\n","Orijinal Metin: ", text)
-    print("\n","SHA-256 ile Şifrelenmiş Metin: ", sifrelenmis_metin, "\n")
+    print("\n","Original Text: ", text)
+    print("\n","Text Encrypted with SHA-256: ", decrypted_text, "\n")
 
 def url_encode():
-    text = str(input("Encode edilecek url : "))
+    text = str(input("Enter a url to encode : "))
 
     encoded = urllib.parse.quote(text)
 
     print("\n",encoded,"\n")
 
 def url_decode():
-    text = str(input("Decode edilecek url : "))
+    text = str(input("Enter a url to decode : "))
     
     encoded = urllib.parse.unquote(text)
 
     print("\n",encoded,"\n")
 
 def ip_scan():
-    getIp = input("Taranacak ip adresi :")
+    getIp = input("Enter an ip address to scan :")
 
     url = f"https://www.virustotal.com/api/v3/ip_addresses/{getIp}"
 
-    api = "apikey"
+    api = "apikey" # you need to add here your virustotal api key to use this
 
     headers = {
         "accept": "application/json",
@@ -69,7 +69,7 @@ def ip_scan():
         attributes = data["data"]["attributes"]
         
         total_analyses = attributes["last_analysis_stats"]
-        print(f"Toplam Analiz Sayısı: {sum(total_analyses.values())}")
+        print(f"Total Number of Analyzes: {sum(total_analyses.values())}")
         
         results = attributes["last_analysis_results"]
         malicious_and_suspicious = []
@@ -78,7 +78,7 @@ def ip_scan():
                 malicious_and_suspicious.append((engine_name, result["category"]))
         
         malicious_and_suspicious.sort(key=lambda x: x[0])
-        print("\n","Zararlı ve Şüpheli Bulunan Güvenlik Sağlayıcıları:","\n")
+        print("\n","Security Providers Deemed Harmful and Suspicious:","\n")
         for i, (engine_name, category) in enumerate(malicious_and_suspicious, start=1):
             print(f"{i}.{engine_name}: {category}")
 
@@ -88,17 +88,17 @@ def ip_scan():
 
         script_dir = os.path.dirname(os.path.abspath(__file__))
         record_path = os.path.join(script_dir, response_filename)
-        print(f"\n","Kayıt dosyası oluşturuldu!","\n")
+        print(f"\n","Log file created!","\n")
 
     else:
-        print("Hata: İstek başarısız. Kod:", response.status_code)
+        print("Error: Request failed. Code:", response.status_code)
 
 
 def cho():
     while True:
-        print("1-> Metin şifrele(Base64)\n2-> Metni çöz(Base64)\n3-> Url encode\n4-> Url decode\n5-> Sha256 encode\n6-> IP scan") 
+        print("1-> Encrypt text(Base64)\n2-> Decrypt text(Base64)\n3-> Url encode\n4-> Url decode\n5-> Sha256 encode\n6-> IP scan") 
 
-        uCho = input("seçim : ")
+        uCho = input("choose : ")
 
         if uCho == "1":
             b64_encrypter()
@@ -119,7 +119,7 @@ def cho():
             ip_scan()
 
         else:
-            print("hata!")
+            print("error!")
             continue
 
 cho()
