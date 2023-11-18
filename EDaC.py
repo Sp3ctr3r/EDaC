@@ -123,6 +123,3 @@ def cho():
             continue
 
 cho()
-
-# hash çözümü, sha şifreleme, url encode-decode
-# virüs total hash sorgusu
